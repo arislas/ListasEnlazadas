@@ -1,5 +1,4 @@
 #include "lista.h"
-#include <stdlib.h>
 
 /* Recibe el puntero a un nodo e imprime sus datos. */
 void imprimirNodo(tNodo* nodo) {
@@ -177,4 +176,85 @@ void creaNodos(tNodo* cabeza, tNodo**  ultimoNodo) {
 
         *ultimoNodo = nuevoNodo;
     }
+}
+
+
+/* Ordena los indices de la lista cuando se inserta o elimina un nodo. */
+void ordenarIndices(tNodo* cabeza) {
+    int indice = 0;
+    tNodo* actual = cabeza;
+
+    while (actual != NULL) {
+        actual->indice = indice;
+        actual = actual->siguiente;
+        indice++;
+    }
+}
+
+
+/* Crea un nodo a partir de los valores introducidos. No se introduce en la lista. */
+tNodo* crearNodoAislado(char* nombre, float precio, int unidades) {
+    tNodo* nodoNuevo = (tNodo*)malloc(sizeof(tNodo));
+
+    if (nodoNuevo == NULL) {
+        perror("Error al asignar memoria a nodoNuevo.\n\n");
+        exit(EXIT_FAILURE);
+    }
+
+    nodoNuevo->nombre = (char*)malloc(strlen(nombre) + 1);
+
+    if (nodoNuevo->nombre == NULL) {
+        perror("Error al asignar memoria al nombre de nodoNuevo.\n\n");
+        free(nodoNuevo);
+        exit(EXIT_FAILURE);
+    }
+
+    nodoNuevo->indice = -1;
+    strcpy(nodoNuevo->nombre, nombre);
+    nodoNuevo->precio = precio;
+    nodoNuevo->unidades = unidades;
+    nodoNuevo->valorTotal = nodoNuevo->unidades * nodoNuevo->precio;
+    nodoNuevo->siguiente = NULL;
+
+    return nodoNuevo;
+}
+
+/* Inserta un nodo al principio. Recibe un puntero doble a la cabeza de la lista y un puntero
+   al nodo nuevo que se quiere insertar al principio. */
+void insertarAlPrincipio(tNodo** cabeza, tNodo* nodoNuevo) {
+    if (nodoNuevo == NULL) {
+        return;
+    }
+
+    nodoNuevo->siguiente = *cabeza;
+    *cabeza = nodoNuevo;
+}
+
+
+/* Inserta un nodo al principio de la lista y reordena los indices a partir del nodo nuevo. */
+void push(tNodo** cabeza, char* nombre, float precio, int unidades) {
+    tNodo* nodoNuevo = (tNodo*)malloc(sizeof(tNodo));
+
+    if (nodoNuevo == NULL) {
+        perror("Error al asignar memoria para el nodoNuevo.\n\n");
+        exit(EXIT_FAILURE);
+    }
+
+    nodoNuevo->nombre = (char*)malloc(strlen(nombre) + 1);
+
+    if (nodoNuevo->nombre == NULL) {
+        perror("Error al asignar memoria para el nombre d nodoNuevo.\n\n");
+        free(nodoNuevo);
+        exit(EXIT_FAILURE);
+    }
+
+    nodoNuevo->indice = 0;
+    strncpy(nodoNuevo->nombre, nombre, strlen(nombre) + 1);
+    nodoNuevo->precio = precio;
+    nodoNuevo->unidades = unidades;
+    nodoNuevo->valorTotal = nodoNuevo->unidades * nodoNuevo->precio;
+    nodoNuevo->siguiente = *cabeza;
+    *cabeza = nodoNuevo;
+
+    ordenarIndices(*cabeza);
 }

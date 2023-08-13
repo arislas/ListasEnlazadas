@@ -117,5 +117,17 @@ int main() {
     imprimirLista(cabeza);
     printf("La lista contiene ahora %d nodos.\n\n", numeroNodos(cabeza));
 
+    printf("====================================================================================================\n");
+    printf("=========================== insertarAlPrincipio =========================================\n");
+    printf("====================================================================================================\n\n");
+
+    tNodo* segundo2 = crearNodoAislado("Segundo", 24, 3);
+    tNodo* primero = crearNodoAislado("Primero", 50, 4);
+
+    insertarAlPrincipio(&cabeza, segundo2);
+    insertarAlPrincipio(&cabeza, primero);
+    ordenarIndices(cabeza);
+    imprimirLista(cabeza);
+
     return 0;
 }

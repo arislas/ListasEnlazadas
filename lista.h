@@ -30,3 +30,16 @@ tNodo* crearNodo(tNodo* cabeza);
 
 /* Recibe un puntero a la cabeza de la lista y un doble puntero al ultimo nodo. Crea cuatro nodos nuevos y los añade al final. */
 void creaNodos(tNodo* cabeza, tNodo**  ultimoNodo);
+
+/* Ordena los indices de la lista cuando se inserta o elimina un nodo. */
+void ordenarIndices(tNodo* cabeza);
+
+/* Crea un nodo a partir de los valores introducidos. No se introduce en la lista. */
+tNodo* crearNodoAislado(char* nombre, float precio, int unidades);
+
+/* Inserta un nodo al principio. Recibe un puntero doble a la cabeza de la lista y un puntero
+   al nodo nuevo que se quiere insertar al principio. */
+void insertarAlPrincipio(tNodo** cabeza, tNodo* nodoNuevo);
+
+/* Inserta un nodo al principio de la lista y reordena los indices a partir del nodo nuevo. */
+void push(tNodo** cabeza, char* nombre, float precio, int unidades);
